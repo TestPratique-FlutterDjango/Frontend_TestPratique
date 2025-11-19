@@ -111,7 +111,7 @@ class AppTheme {
       
       // Card Theme
       cardTheme: CardThemeData(
-        elevation: 2,
+        elevation: 8,
         shadowColor: AppColors.shadow,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -159,7 +159,7 @@ class AppTheme {
         ),
       ),
       
-      // Elevated Button Theme
+      // Bouton surélevé Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 2,
@@ -176,7 +176,7 @@ class AppTheme {
         ),
       ),
       
-      // Text Button Theme
+      // Bouton de texte Theme
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
@@ -188,7 +188,7 @@ class AppTheme {
         ),
       ),
       
-      // Outlined Button Theme
+      // Bouton de bordure Theme
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
@@ -236,7 +236,7 @@ class AppTheme {
       
       // Chip Theme
       chipTheme: ChipThemeData(
-        backgroundColor: AppColors.surfaceVariant,
+        backgroundColor: const Color.fromARGB(97, 17, 24, 39),
         selectedColor: AppColors.primary,
         disabledColor: AppColors.borderLight,
         labelStyle: GoogleFonts.poppins(
