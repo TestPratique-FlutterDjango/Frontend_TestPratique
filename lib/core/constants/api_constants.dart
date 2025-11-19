@@ -1,6 +1,6 @@
 class ApiConstants {
   // Base URL
-  static const String baseUrl = 'http://10.0.2.2:8000'; //'https://backend-testpratique-2.onrender.com';
+  static const String baseUrl = 'https://backend-testpratique-2.onrender.com';
   
   // Timeout
   static const Duration connectTimeout = Duration(seconds: 30);
