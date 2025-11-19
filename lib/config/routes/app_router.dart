@@ -13,8 +13,11 @@ import '../../features/company/presentation/pages/edit_company_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/publication/domain/entities/publication.dart';
 import '../../features/publication/presentation/pages/create_publication_page.dart';
+import '../../features/publication/presentation/pages/edit_publication_page.dart';
+import '../../features/publication/presentation/pages/my_publications_page.dart';
 import '../../features/publication/presentation/pages/publication_detail_page.dart';
 import '../../features/publication/presentation/pages/search_publications_page.dart';
+
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -78,6 +81,17 @@ class AppRouter {
       case RouteNames.searchPublications:
         return MaterialPageRoute(
           builder: (_) => const SearchPublicationsPage(),
+        );
+
+      case RouteNames.myPublications:
+        return MaterialPageRoute(
+          builder: (_) => const MyPublicationsPage(),
+        );
+
+      case RouteNames.editPublication:
+        final publication = settings.arguments! as Publication;
+        return MaterialPageRoute(
+          builder: (_) => EditPublicationPage(publication: publication),
         );
 
       // Default route

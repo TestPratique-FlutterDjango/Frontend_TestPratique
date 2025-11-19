@@ -18,10 +18,10 @@ class DioClient {
       ),
     );
 
-    // Add interceptors
+    // Ajout de l'intercepteur d'API
     _dio.interceptors.add(ApiInterceptor());
     
-    // Add logging interceptor in debug mode
+    // Ajout de l'intercepteur de journalisation
     _dio.interceptors.add(
       LogInterceptor(
         requestBody: true,
@@ -35,7 +35,7 @@ class DioClient {
 
   Dio get dio => _dio;
 
-  // GET Request
+  // Obtention de l'instance Dio
   Future<Response> get(
     String path, {
     Map<String, dynamic>? queryParameters,

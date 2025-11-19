@@ -14,8 +14,6 @@ class AppTheme {
         primary: AppColors.primary,
         secondary: AppColors.secondary,
         error: AppColors.error,
-        surface: AppColors.surface,
-        background: AppColors.background,
       ),
       
       // Text Theme
@@ -129,11 +127,11 @@ class AppTheme {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border, width: 1),
+          borderSide: const BorderSide(color: AppColors.border,),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border, width: 1),
+          borderSide: const BorderSide(color: AppColors.border,),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -141,7 +139,7 @@ class AppTheme {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.error, width: 1),
+          borderSide: const BorderSide(color: AppColors.error,),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -261,21 +259,21 @@ class AppTheme {
   }
   
   // Spacing Constants
-  static const double paddingXS = 4.0;
-  static const double paddingSM = 8.0;
-  static const double paddingMD = 16.0;
-  static const double paddingLG = 24.0;
-  static const double paddingXL = 32.0;
+  static const double paddingXS = 4;
+  static const double paddingSM = 8;
+  static const double paddingMD = 16;
+  static const double paddingLG = 24;
+  static const double paddingXL = 32;
   
   // Border Radius Constants
-  static const double radiusSM = 8.0;
-  static const double radiusMD = 12.0;
-  static const double radiusLG = 16.0;
-  static const double radiusXL = 24.0;
+  static const double radiusSM = 8;
+  static const double radiusMD = 12;
+  static const double radiusLG = 16;
+  static const double radiusXL = 24;
   
   // Icon Sizes
-  static const double iconSM = 16.0;
-  static const double iconMD = 24.0;
-  static const double iconLG = 32.0;
-  static const double iconXL = 48.0;
+  static const double iconSM = 16;
+  static const double iconMD = 24;
+  static const double iconLG = 32;
+  static const double iconXL = 48;
 }

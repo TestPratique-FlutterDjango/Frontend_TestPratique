@@ -53,11 +53,11 @@ class AppColors {
     end: Alignment.bottomRight,
   );
   
-  // Account Type Colors
+  // Couleurs de type de compte
   static const Color privateAccount = Color(0xFF8B5CF6); // Purple
   static const Color professionalAccount = Color(0xFF0EA5E9); // Sky Blue
   
-  // Publication Status Colors
+  // couleurs de statut de publication
   static const Color statusDraft = Color(0xFF6B7280); // Gray
   static const Color statusPublished = Color(0xFF10B981); // Green
   static const Color statusArchived = Color(0xFFF59E0B); // Orange

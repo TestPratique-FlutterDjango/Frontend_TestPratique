@@ -15,14 +15,6 @@ class PublicationsListPage extends StatefulWidget {
 }
 
 class _PublicationsListPageState extends State<PublicationsListPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<PublicationProvider>().getPublications();
-    });
-  }
-
   Future<void> _handleRefresh() async {
     await context.read<PublicationProvider>().getPublications();
   }
@@ -34,10 +26,18 @@ class _PublicationsListPageState extends State<PublicationsListPage> {
         title: const Text(AppStrings.publications),
         actions: [
           IconButton(
+            icon: const Icon(Icons.article),
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteNames.myPublications);
+            },
+            tooltip: 'Mes publications',
+          ),
+          IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
               Navigator.of(context).pushNamed(RouteNames.searchPublications);
             },
+            tooltip: 'Rechercher',
           ),
         ],
       ),

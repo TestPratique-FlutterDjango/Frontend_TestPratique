@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/dio_client.dart';
 import '../models/company_model.dart';
 
+final _logger = Logger(); 
 abstract class CompanyRemoteDataSource {
   Future<List<CompanyModel>> getCompanies();
   Future<CompanyModel> getCompanyById(int id);
@@ -24,11 +26,29 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
       final response = await dioClient.get(ApiConstants.companies);
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data as List<dynamic>;
+        
+        final List<dynamic> data;
+        
+        if (response.data is Map<String, dynamic> && response.data.containsKey('results')) {
+          // Format paginé: {"count": 1, "results": [...]}
+          data = response.data['results'] as List<dynamic>;
+          _logger.i(' Entreprises récupérées (format paginé): ${data.length} éléments');
+        } else if (response.data is List) {
+          // Format liste directe: [...]
+          data = response.data as List<dynamic>;
+          _logger.i(' Entreprises récupérées (format liste): ${data.length} éléments');
+        } else {
+          _logger.i(' Format de réponse inattendu: ${response.data.runtimeType}');
+          throw ServerException(
+            message: 'Format de réponse invalide',
+            statusCode: response.statusCode,
+          );
+        }
+        
         return data.map((json) => CompanyModel.fromJson(json)).toList();
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to get companies',
+          message: response.data['error'] ?? 'Erreur de récupération des entreprises',
           statusCode: response.statusCode,
         );
       }
@@ -46,7 +66,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
         return CompanyModel.fromJson(response.data);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to get company',
+          message: response.data['error'] ?? "Echec de récupération de l'entreprise",
           statusCode: response.statusCode,
         );
       }
@@ -67,7 +87,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
         return CompanyModel.fromJson(response.data['company']);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to create company',
+          message: response.data['error'] ?? "Echec de création de l'entreprise",
           statusCode: response.statusCode,
         );
       }
@@ -88,7 +108,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
         return CompanyModel.fromJson(response.data['company']);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to update company',
+          message: response.data['error'] ?? "Erreur de mise à jour de l'entreprise",
           statusCode: response.statusCode,
         );
       }
@@ -104,7 +124,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
 
       if (response.statusCode != 204 && response.statusCode != 200) {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to delete company',
+          message: response.data['error'] ?? "Echec de suppression de l'entreprise",
           statusCode: response.statusCode,
         );
       }
@@ -124,7 +144,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
         return CompanyModel.fromJson(response.data['company']);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to toggle company status',
+          message: response.data['error'] ?? "Echec de changement du statut de l'entreprise",
           statusCode: response.statusCode,
         );
       }
@@ -138,7 +158,7 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return TimeoutException(message: 'Connection timeout');
+        return TimeoutException(message: 'Connexion délai dépassé');
 
       case DioExceptionType.badResponse:
         final statusCode = e.response?.statusCode;
@@ -174,15 +194,15 @@ class CompanyRemoteDataSourceImpl implements CompanyRemoteDataSource {
 
       case DioExceptionType.connectionError:
         return NetworkException(
-          message: 'No internet connection',
+          message: 'Pas de connexion Internet',
         );
 
       case DioExceptionType.cancel:
-        return ServerException(message: 'Request cancelled');
+        return ServerException(message: 'Requête annulée');
 
       default:
         return ServerException(
-          message: e.message ?? 'Unknown error occurred',
+          message: e.message ?? 'Erreur inattendue',
         );
     }
   }

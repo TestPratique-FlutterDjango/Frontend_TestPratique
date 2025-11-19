@@ -1,5 +1,7 @@
-import '../../domain/entities/company.dart';
+import 'package:logger/logger.dart';
 
+import '../../domain/entities/company.dart';
+final _logger = Logger();
 class CompanyModel extends Company {
   const CompanyModel({
     required super.id,
@@ -18,22 +20,32 @@ class CompanyModel extends Company {
   });
 
   factory CompanyModel.fromJson(Map<String, dynamic> json) {
+    // Gestion robuste de userId
+    int userId = 0;
+    try {
+      if (json['user'] is Map) {
+        userId = json['user']['id'] as int? ?? 0;
+      } else if (json['user'] is int) {
+        userId = json['user'] as int;
+      }
+    } catch (e) {
+      _logger.e('Erreur lors du parsing de user ID: $e');
+    }
+    
     return CompanyModel(
       id: json['id'] as int,
-      userId: json['user'] is Map
-          ? json['user']['id'] as int
-          : json['user'] as int? ?? 0,
-      name: json['name'] as String,
-      cfeNumber: json['cfe_number'] as String,
-      address: json['address'] as String,
+      userId: userId,
+      name: json['name'] as String? ?? '',
+      cfeNumber: json['cfe_number'] as String? ?? '',
+      address: json['address'] as String? ?? '',
       phone: json['phone'] as String?,
       email: json['email'] as String?,
       description: json['description'] as String?,
       website: json['website'] as String?,
       isActive: json['is_active'] as bool? ?? true,
       publicationsCount: json['publications_count'] as int? ?? 0,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+      createdAt: DateTime.tryParse(json['created_at'] as String? ?? '') ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at'] as String? ?? '') ?? DateTime.now(),
     );
   }
 

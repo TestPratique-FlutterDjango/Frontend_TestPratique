@@ -3,13 +3,13 @@ import '../../../../core/error/failures.dart';
 import '../entities/company.dart';
 
 abstract class CompanyRepository {
-  /// Get all companies of current user
+  /// Obtention pour la liste des entreprises
   Future<Either<Failure, List<Company>>> getCompanies();
 
-  /// Get company by id
+  /// Obtention d'une entreprise par son ID
   Future<Either<Failure, Company>> getCompanyById(int id);
 
-  /// Create new company
+  /// Création d'une entreprise
   Future<Either<Failure, Company>> createCompany({
     required String name,
     required String cfeNumber,
@@ -20,7 +20,7 @@ abstract class CompanyRepository {
     String? website,
   });
 
-  /// Update company
+  /// Mise à jour d'une entreprise
   Future<Either<Failure, Company>> updateCompany({
     required int id,
     required String name,
@@ -32,9 +32,9 @@ abstract class CompanyRepository {
     bool? isActive,
   });
 
-  /// Delete company
+  /// Suppression d'une entreprise
   Future<Either<Failure, void>> deleteCompany(int id);
 
-  /// Toggle company status (active/inactive)
+  /// Basculer le statut actif/inactif d'une entreprise
   Future<Either<Failure, Company>> toggleCompanyStatus(int id);
 }

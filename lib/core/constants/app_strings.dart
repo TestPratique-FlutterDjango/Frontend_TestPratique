@@ -124,7 +124,7 @@ class AppStrings {
   static const String confirmDeleteCompany = 'Voulez-vous vraiment supprimer cette entreprise ?';
   static const String confirmDeletePublication = 'Voulez-vous vraiment supprimer cette publication ?';
   
-  // Empty States
+  // Etats vides
   static const String noCompanies = 'Aucune entreprise';
   static const String noPublications = 'Aucune publication';
   static const String noResults = 'Aucun résultat trouvé';

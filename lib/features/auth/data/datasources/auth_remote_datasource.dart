@@ -33,7 +33,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return AuthResponseModel.fromJson(response.data);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Login failed',
+          message: response.data['error'] ?? 'Échec de la connexion',
           statusCode: response.statusCode,
         );
       }
@@ -54,7 +54,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return AuthResponseModel.fromJson(response.data);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Registration failed',
+          message: response.data['error'] ?? 'Enregistrement échoué',
           statusCode: response.statusCode,
         );
       }
@@ -73,7 +73,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       if (response.statusCode != 200) {
         throw ServerException(
-          message: response.data['error'] ?? 'Logout failed',
+          message: response.data['error'] ?? 'Deconnexion échouée',
           statusCode: response.statusCode,
         );
       }
@@ -91,7 +91,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return UserModel.fromJson(response.data);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to get user profile',
+          message: response.data['error'] ?? 'Echec de récupération du profil utilisateur',
           statusCode: response.statusCode,
         );
       }
@@ -112,7 +112,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return UserModel.fromJson(response.data['user']);
       } else {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to update profile',
+          message: response.data['error'] ?? 'Echec de la mise à jour du profil',
           statusCode: response.statusCode,
         );
       }
@@ -131,7 +131,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       if (response.statusCode != 200) {
         throw ServerException(
-          message: response.data['error'] ?? 'Failed to change password',
+          message: response.data['error'] ?? 'Echec du changement de mot de passe',
           statusCode: response.statusCode,
         );
       }
@@ -145,13 +145,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        return TimeoutException(message: 'Connection timeout');
+        return TimeoutException(message: 'La requête a expiré');
 
       case DioExceptionType.badResponse:
         final statusCode = e.response?.statusCode;
         final errorMessage = e.response?.data?['error'] ?? 
                            e.response?.data?['detail'] ?? 
-                           'Server error';
+                           'Erreur serveur';
 
         if (statusCode == 401) {
           return UnauthorizedException(message: errorMessage);
@@ -176,15 +176,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       case DioExceptionType.connectionError:
         return NetworkException(
-          message: 'No internet connection',
+          message: 'Pas de connexion Internet',
         );
 
       case DioExceptionType.cancel:
-        return ServerException(message: 'Request cancelled');
+        return ServerException(message: 'Annulation de la requête');
 
       default:
         return ServerException(
-          message: e.message ?? 'Unknown error occurred',
+          message: e.message ?? 'Erreur serveur inconnue',
         );
     }
   }

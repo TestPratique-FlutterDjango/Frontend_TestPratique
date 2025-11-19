@@ -46,7 +46,7 @@ class AuthProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get isAuthenticated => _status == AuthStatus.authenticated;
 
-  // Login
+  // Connexion
   Future<bool> login({
     required String email,
     required String password,
@@ -77,7 +77,7 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  // Register
+  // Inscription
   Future<bool> register({
     required String email,
     required String password,
@@ -122,7 +122,7 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  // Logout
+  // Deconnexion
   Future<bool> logout(String refreshToken) async {
     _setLoading(true);
     _errorMessage = null;
@@ -132,7 +132,7 @@ class AuthProvider extends ChangeNotifier {
 
     return result.fold(
       (failure) {
-        // Even if logout fails on server, clear local data
+        // Si la deconnexion échoue, on nettoie quand même l'état local
         _user = null;
         _status = AuthStatus.unauthenticated;
         _setLoading(false);
@@ -149,7 +149,7 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  // Get Current User
+  // Obtention de l'utilisateur actuelle
   Future<bool> getCurrentUser() async {
     _setLoading(true);
     _errorMessage = null;
@@ -172,7 +172,7 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  // Update Profile
+  // Mise à jour du profil
   Future<bool> updateProfile({
     required String firstName,
     required String lastName,
@@ -208,7 +208,7 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  // Change Password
+  // Changer le mot de passe
   Future<bool> changePassword({
     required String oldPassword,
     required String newPassword,
@@ -239,7 +239,7 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  // Helper methods
+  // Methode de support
   void _setLoading(bool value) {
     _isLoading = value;
     if (value) {

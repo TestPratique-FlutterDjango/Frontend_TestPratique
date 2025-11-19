@@ -10,10 +10,10 @@ class ApiInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    // Get access token from secure storage
+    // Acquerir le token d'acces
     final accessToken = await _secureStorage.getAccessToken();
 
-    // Add Authorization header if token exists
+    // Ajouter le token d'acces aux en-tetes de la requete
     if (accessToken != null && accessToken.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $accessToken';
     }
@@ -26,13 +26,13 @@ class ApiInterceptor extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    // Handle 401 Unauthorized - Token expired
+    // Gerer les erreurs 401 (Unauthorized)
     if (err.response?.statusCode == 401) {
-      // Try to refresh token
+      // Tenter de rafraichir le token
       final refreshed = await _refreshToken(err.requestOptions);
       
       if (refreshed) {
-        // Retry the request with new token
+        // Tenter de renvoyer la requete originale
         try {
           final response = await _retry(err.requestOptions);
           return handler.resolve(response);
@@ -40,7 +40,7 @@ class ApiInterceptor extends Interceptor {
           return handler.reject(e);
         }
       } else {
-        // Refresh failed - logout user
+        // Echec du rafraichissement du token, deconnexion de l'utilisateur
         await _secureStorage.clearAll();
         return handler.reject(err);
       }
@@ -57,7 +57,7 @@ class ApiInterceptor extends Interceptor {
         return false;
       }
 
-      // Create a new Dio instance to avoid interceptor loop
+      // creer une instance Dio pour rafraichir le token
       final dio = Dio(
         BaseOptions(
           baseUrl: ApiConstants.baseUrl,
@@ -77,7 +77,7 @@ class ApiInterceptor extends Interceptor {
         final newAccessToken = response.data['access'];
         final newRefreshToken = response.data['refresh'];
 
-        // Save new tokens
+        // Sauver les nouveaux tokens
         await _secureStorage.saveAccessToken(newAccessToken);
         if (newRefreshToken != null) {
           await _secureStorage.saveRefreshToken(newRefreshToken);
@@ -93,13 +93,13 @@ class ApiInterceptor extends Interceptor {
   }
 
   Future<Response> _retry(RequestOptions requestOptions) async {
-    // Get new access token
+    // Obtenir le nouveau token d'acces
     final newAccessToken = await _secureStorage.getAccessToken();
 
-    // Update request with new token
+    // Mettre a jour les en-tetes de la requete originale
     requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
 
-    // Create new Dio instance to retry
+    // Creer une instance Dio pour renvoyer la requete
     final dio = Dio(
       BaseOptions(
         baseUrl: ApiConstants.baseUrl,
@@ -107,7 +107,7 @@ class ApiInterceptor extends Interceptor {
       ),
     );
 
-    // Retry the request
+    // Renvoyer la requete originale
     final response = await dio.request(
       requestOptions.path,
       data: requestOptions.data,

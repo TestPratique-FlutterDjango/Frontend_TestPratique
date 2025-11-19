@@ -18,7 +18,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
   @override
   Future<Either<Failure, List<Company>>> getCompanies() async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion Internet'));
     }
 
     try {
@@ -40,7 +40,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
   @override
   Future<Either<Failure, Company>> getCompanyById(int id) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion Internet'));
     }
 
     try {
@@ -68,7 +68,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
     String? website,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion Internet'));
     }
 
     try {
@@ -106,7 +106,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
     bool? isActive,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion Internet'));
     }
 
     try {
@@ -136,7 +136,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
   @override
   Future<Either<Failure, void>> deleteCompany(int id) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion Internet'));
     }
 
     try {
@@ -154,7 +154,7 @@ class CompanyRepositoryImpl implements CompanyRepository {
   @override
   Future<Either<Failure, Company>> toggleCompanyStatus(int id) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion Internet'));
     }
 
     try {

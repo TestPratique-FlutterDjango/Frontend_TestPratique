@@ -3,16 +3,16 @@ import '../../../../core/error/failures.dart';
 import '../entities/publication.dart';
 
 abstract class PublicationRepository {
-  /// Get all published publications
+  /// Obtention de la liste des publications
   Future<Either<Failure, List<Publication>>> getPublications();
 
-  /// Get user's publications (all statuses)
+  /// Obtention de la liste de mes publications
   Future<Either<Failure, List<Publication>>> getMyPublications();
 
-  /// Get publication by id
+  /// Obtention d'une publication par son ID
   Future<Either<Failure, Publication>> getPublicationById(int id);
 
-  /// Search publications
+  /// Recherche de publications avec des paramètres optionnels
   Future<Either<Failure, List<Publication>>> searchPublications({
     String? query,
     String? status,
@@ -20,7 +20,7 @@ abstract class PublicationRepository {
     String? tags,
   });
 
-  /// Create publication
+  /// Création d'une nouvelle publication
   Future<Either<Failure, Publication>> createPublication({
     required String title,
     required String content,
@@ -30,7 +30,7 @@ abstract class PublicationRepository {
     String? imagePath,
   });
 
-  /// Update publication
+  /// Mise à jour d'une publication existante
   Future<Either<Failure, Publication>> updatePublication({
     required int id,
     required String title,
@@ -41,12 +41,12 @@ abstract class PublicationRepository {
     String? imagePath,
   });
 
-  /// Delete publication
+  /// Suppression d'une publication
   Future<Either<Failure, void>> deletePublication(int id);
 
-  /// Publish publication (change status to PUBLISHED)
+  /// Publier une publication
   Future<Either<Failure, Publication>> publishPublication(int id);
 
-  /// Archive publication
+  /// Archiver une publication
   Future<Either<Failure, Publication>> archivePublication(int id);
 }

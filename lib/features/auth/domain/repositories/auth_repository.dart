@@ -3,13 +3,13 @@ import '../../../../core/error/failures.dart';
 import '../entities/user.dart';
 
 abstract class AuthRepository {
-  /// Login user with email and password
+  /// Connexion utilisateur
   Future<Either<Failure, User>> login({
     required String email,
     required String password,
   });
 
-  /// Register new user
+  /// Inscription utilisateur
   Future<Either<Failure, User>> register({
     required String email,
     required String password,
@@ -22,15 +22,15 @@ abstract class AuthRepository {
     String? cfeNumber,
   });
 
-  /// Logout current user
+  /// Deconnexion 
   Future<Either<Failure, void>> logout({
     required String refreshToken,
   });
 
-  /// Get current user profile
+  /// Obtention de l'utilisateur actuelle
   Future<Either<Failure, User>> getCurrentUser();
 
-  /// Update user profile
+  /// Mise à jour du profil utilisateur
   Future<Either<Failure, User>> updateProfile({
     required String firstName,
     required String lastName,
@@ -39,16 +39,16 @@ abstract class AuthRepository {
     String? cfeNumber,
   });
 
-  /// Change password
+  /// Changement de mot de passe
   Future<Either<Failure, void>> changePassword({
     required String oldPassword,
     required String newPassword,
     required String newPasswordConfirm,
   });
 
-  /// Check if user is logged in
+  /// Vérifie si l'utilisateur est connecté
   Future<bool> isLoggedIn();
 
-  /// Get cached user
+  /// Obtention de l'utilisateur en cache
   Future<User?> getCachedUser();
 }

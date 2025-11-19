@@ -11,7 +11,7 @@ import '../providers/company_provider.dart';
 
 class EditCompanyPage extends StatefulWidget {
 
-  const EditCompanyPage({super.key, required this.company});
+  const EditCompanyPage({required this.company, super.key});
   final Company company;
 
   @override

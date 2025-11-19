@@ -124,18 +124,18 @@ class AuthRepositoryImpl implements AuthRepository {
         await remoteDataSource.logout(refreshToken);
       }
 
-      // Clear local data
+      // Nettoyer les données locales même en cas d'erreur serveur
       await localDataSource.deleteTokens();
       await localDataSource.clearCache();
 
       return const Right(null);
     } on ServerException catch (e) {
-      // Still clear local data even if server request fails
+      // En cas d'erreur serveur, on nettoie quand même les données locales
       await localDataSource.deleteTokens();
       await localDataSource.clearCache();
       return Left(ServerFailure(e.message, statusCode: e.statusCode));
     } catch (e) {
-      // Still clear local data
+      // Si une autre erreur se produit, on nettoie quand même les données locales
       await localDataSource.deleteTokens();
       await localDataSource.clearCache();
       return Left(ServerFailure(e.toString()));
@@ -145,15 +145,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, User>> getCurrentUser() async {
     if (!await networkInfo.isConnected) {
-      // Try to get cached user
+      // Tenter de récupérer l'utilisateur en cache
       try {
         final cachedUser = await localDataSource.getCachedUser();
         if (cachedUser != null) {
           return Right(cachedUser.toEntity());
         }
-        return const Left(CacheFailure('No cached user found'));
+        return const Left(CacheFailure("Pas d'utilisateur en cache"));
       } catch (e) {
-        return const Left(CacheFailure('Failed to get cached user'));
+        return const Left(CacheFailure("Erreur lors de la récupération de l'utilisateur en cache"));
       }
     }
 
@@ -179,7 +179,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String? cfeNumber,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -210,7 +210,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String newPasswordConfirm,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {

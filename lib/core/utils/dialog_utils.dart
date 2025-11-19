@@ -3,7 +3,7 @@ import '../constants/app_colors.dart';
 import '../constants/app_strings.dart';
 
 class DialogUtils {
-  // Confirmation Dialog
+  // Dialogue de confirmation générique
   static Future<bool?> showConfirmationDialog(
     BuildContext context, {
     required String title,
@@ -51,7 +51,7 @@ class DialogUtils {
     );
   }
 
-  // Delete Confirmation Dialog
+  // Dialogue de confirmation de suppression
   static Future<bool?> showDeleteConfirmationDialog(
     BuildContext context, {
     required String title,
@@ -66,7 +66,7 @@ class DialogUtils {
     );
   }
 
-  // Loading Dialog
+  // Dialogue de chargement
   static void showLoadingDialog(
     BuildContext context, {
     String? message,
@@ -96,7 +96,7 @@ class DialogUtils {
     );
   }
 
-  // Success Dialog
+  // Dialogue de succès
   static Future<void> showSuccessDialog(
     BuildContext context, {
     required String title,
@@ -146,7 +146,7 @@ class DialogUtils {
     );
   }
 
-  // Error Dialog
+  // Dialogue d'erreur
   static Future<void> showErrorDialog(
     BuildContext context, {
     required String title,
@@ -198,7 +198,7 @@ class DialogUtils {
     );
   }
 
-  // Info Dialog
+  // Dialogue d'information
   static Future<void> showInfoDialog(
     BuildContext context, {
     required String title,
@@ -248,7 +248,7 @@ class DialogUtils {
     );
   }
 
-  // Bottom Sheet
+  // Bouton d'action en bas de l'écran
   static Future<T?> showBottomSheet<T>(
     BuildContext context, {
     required Widget child,

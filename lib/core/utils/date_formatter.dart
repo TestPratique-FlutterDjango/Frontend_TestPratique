@@ -36,7 +36,7 @@ class DateFormatter {
     return DateFormat('EEEE d MMMM y', 'fr_FR').format(date);
   }
 
-  // Relative time (il y a 2 heures, il y a 3 jours, etc.)
+  // Temps relative (il y a 2 heures, il y a 3 jours, etc.)
   static String formatRelativeTime(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
@@ -64,7 +64,7 @@ class DateFormatter {
     }
   }
 
-  // Parse ISO 8601 string to DateTime
+  // Parser une chaîne ISO 8601 en DateTime
   static DateTime? parseIsoString(String? isoString) {
     if (isoString == null || isoString.isEmpty) return null;
     try {
@@ -74,7 +74,7 @@ class DateFormatter {
     }
   }
 
-  // Check if date is today
+  // Verifier si la date est aujourd'hui
   static bool isToday(DateTime date) {
     final now = DateTime.now();
     return date.year == now.year &&
@@ -82,7 +82,7 @@ class DateFormatter {
         date.day == now.day;
   }
 
-  // Check if date is yesterday
+  // Verifier si la date est hier
   static bool isYesterday(DateTime date) {
     final yesterday = DateTime.now().subtract(const Duration(days: 1));
     return date.year == yesterday.year &&
@@ -90,14 +90,14 @@ class DateFormatter {
         date.day == yesterday.day;
   }
 
-  // Get day difference
+  // Obtenir la différence en jours entre une date donnée et aujourd'hui
   static int getDaysDifference(DateTime date) {
     final now = DateTime.now();
     final difference = now.difference(date);
     return difference.inDays;
   }
 
-  // Format with condition (today, yesterday, or date)
+  // Format pour affichage intelligent
   static String formatSmartDate(DateTime date) {
     if (isToday(date)) {
       return "Aujourd'hui à ${formatTime(date)}";

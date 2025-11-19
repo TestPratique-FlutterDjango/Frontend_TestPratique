@@ -4,7 +4,9 @@ import 'package:publications_app/config/routes/routes_names.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../../company/presentation/pages/companies_list_page.dart';
+import '../../../company/presentation/providers/company_provider.dart';
 import '../../../publication/presentation/pages/publications_list_page.dart';
+import '../../../publication/presentation/providers/publication_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,11 +26,32 @@ class _HomePageState extends State<HomePage> {
     final user = context.read<AuthProvider>().user;
     final isProfessional = user?.isProfessional ?? false;
 
+    // Force un délai pour être sûr que les providers sont prêts
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        context.read<PublicationProvider>().getPublications();
+        if (isProfessional) {
+          context.read<CompanyProvider>().getCompanies();
+        }
+      }
+    });
+
     _pages = [
       const PublicationsListPage(),
-      if (isProfessional) const CompaniesListPage() else const _NotProfessionalTab(),
+      if (isProfessional)
+        const CompaniesListPage()
+      else
+        const _NotProfessionalTab(),
       const _ProfileTab(),
     ];
+
+    // Charger les données au démarrage
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<PublicationProvider>().getPublications();
+      if (isProfessional) {
+        context.read<CompanyProvider>().getCompanies();
+      }
+    });
   }
 
   void _onItemTapped(int index) {
@@ -72,9 +95,7 @@ class _NotProfessionalTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Entreprises'),
-      ),
+      appBar: AppBar(title: const Text('Entreprises')),
       body: const Center(
         child: Padding(
           padding: EdgeInsets.all(24),
@@ -89,19 +110,13 @@ class _NotProfessionalTab extends StatelessWidget {
               SizedBox(height: 24),
               Text(
                 'Réservé aux comptes professionnels',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 8),
               Text(
                 'Créez un compte professionnel pour gérer vos entreprises',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.textSecondary,
-                ),
+                style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -118,9 +133,7 @@ class _ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profil'),
-      ),
+      appBar: AppBar(title: const Text('Profil')),
       body: Center(
         child: ElevatedButton.icon(
           onPressed: () {

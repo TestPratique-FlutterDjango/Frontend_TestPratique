@@ -29,7 +29,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       await localStorage.saveUserData(user.toJson());
       await localStorage.saveLoginStatus(true);
     } catch (e) {
-      throw CacheException(message: 'Failed to cache user data');
+      throw CacheException(message: "Erreur de mise en cache de l'utilisateur");
     }
   }
 
@@ -42,7 +42,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       }
       return null;
     } catch (e) {
-      throw CacheException(message: 'Failed to get cached user');
+      throw CacheException(message: "Erreur de récupération de l'utilisateur en cache");
     }
   }
 
@@ -52,7 +52,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
       await localStorage.deleteUserData();
       await localStorage.saveLoginStatus(false);
     } catch (e) {
-      throw CacheException(message: 'Failed to clear cache');
+      throw CacheException(message: 'Erreur de nettoyage du cache');
     }
   }
 
@@ -61,7 +61,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     try {
       await secureStorage.saveTokens(accessToken, refreshToken);
     } catch (e) {
-      throw CacheException(message: 'Failed to save tokens');
+      throw CacheException(message: 'Echec de sauvegarde des tokens');
     }
   }
 
@@ -70,7 +70,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     try {
       return await secureStorage.getAccessToken();
     } catch (e) {
-      throw CacheException(message: 'Failed to get access token');
+      throw CacheException(message: "Echec de récupération du token d'accès");
     }
   }
 
@@ -79,7 +79,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     try {
       return await secureStorage.getRefreshToken();
     } catch (e) {
-      throw CacheException(message: 'Failed to get refresh token');
+      throw CacheException(message: 'Echec de récupération du token de rafraîchissement');
     }
   }
 
@@ -88,7 +88,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     try {
       await secureStorage.deleteTokens();
     } catch (e) {
-      throw CacheException(message: 'Failed to delete tokens');
+      throw CacheException(message: 'Echec de suppression des tokens');
     }
   }
 

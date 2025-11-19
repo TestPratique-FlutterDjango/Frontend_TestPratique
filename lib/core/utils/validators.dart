@@ -1,5 +1,5 @@
 class Validators {
-  // Email Validation
+  // Validation d'email
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return "L'email est obligatoire";
@@ -16,7 +16,7 @@ class Validators {
     return null;
   }
 
-  // Password Validation
+  // Validation de mot de passe
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       return 'Le mot de passe est obligatoire';
@@ -29,7 +29,7 @@ class Validators {
     return null;
   }
 
-  // Confirm Password Validation
+  // Validation de confirmation de mot de passe
   static String? validateConfirmPassword(String? value, String? password) {
     if (value == null || value.isEmpty) {
       return 'Veuillez confirmer le mot de passe';
@@ -42,7 +42,7 @@ class Validators {
     return null;
   }
 
-  // Required Field Validation
+  // Validation de champ obligatoire
   static String? validateRequired(String? value, {String? fieldName}) {
     if (value == null || value.isEmpty) {
       return '${fieldName ?? 'Ce champ'} est obligatoire';
@@ -50,7 +50,7 @@ class Validators {
     return null;
   }
 
-  // Name Validation (First Name, Last Name)
+  // Validation de nom 
   static String? validateName(String? value, {String? fieldName}) {
     if (value == null || value.isEmpty) {
       return '${fieldName ?? 'Le nom'} est obligatoire';
@@ -68,16 +68,16 @@ class Validators {
     return null;
   }
 
-  // Phone Number Validation
+  // Validation de numéro de téléphone
   static String? validatePhone(String? value) {
     if (value == null || value.isEmpty) {
-      return null; // Optional field
+      return null; 
     }
     
-    // Remove spaces and special characters
+    // Supprimer les espaces, tirets et parenthèses
     final cleanPhone = value.replaceAll(RegExp(r'[\s\-\(\)]'), '');
     
-    // Check if it's a valid phone number (8-15 digits)
+    // Vérifier le format du numéro de téléphone
     final phoneRegex = RegExp(r'^\+?[0-9]{8,15}$');
     if (!phoneRegex.hasMatch(cleanPhone)) {
       return 'Numéro de téléphone invalide';
@@ -86,10 +86,10 @@ class Validators {
     return null;
   }
 
-  // URL Validation
+  // Validation d'URL
   static String? validateUrl(String? value) {
     if (value == null || value.isEmpty) {
-      return null; // Optional field
+      return null; 
     }
     
     final urlRegex = RegExp(
@@ -103,7 +103,7 @@ class Validators {
     return null;
   }
 
-  // CFE Number Validation (Professional accounts)
+  // Validation de numéro CFE (pour comptes professionnels)
   static String? validateCFENumber(String? value, {bool isRequired = false}) {
     if (!isRequired && (value == null || value.isEmpty)) {
       return null;
@@ -120,7 +120,7 @@ class Validators {
     return null;
   }
 
-  // Company Name Validation
+  // Validation du nom de l'entreprise
   static String? validateCompanyName(String? value, {bool isRequired = false}) {
     if (!isRequired && (value == null || value.isEmpty)) {
       return null;
@@ -137,7 +137,7 @@ class Validators {
     return null;
   }
 
-  // Address Validation
+  // Validation de l'adresse
   static String? validateAddress(String? value, {bool isRequired = true}) {
     if (!isRequired && (value == null || value.isEmpty)) {
       return null;
@@ -154,7 +154,7 @@ class Validators {
     return null;
   }
 
-  // Title Validation (for publications)
+  // Validation du titre pour la publication
   static String? validateTitle(String? value) {
     if (value == null || value.isEmpty) {
       return 'Le titre est obligatoire';
@@ -171,7 +171,7 @@ class Validators {
     return null;
   }
 
-  // Content Validation (for publications)
+  // Validation de contenu pour la publication
   static String? validateContent(String? value) {
     if (value == null || value.isEmpty) {
       return 'Le contenu est obligatoire';
@@ -190,7 +190,7 @@ class Validators {
       return null; // Optional field
     }
     
-    // Check if tags are comma-separated
+    // Verifier le nombre de tags (séparés par des virgules)
     final tags = value.split(',').map((tag) => tag.trim()).toList();
     
     if (tags.length > 10) {
@@ -200,7 +200,7 @@ class Validators {
     return null;
   }
 
-  // Number Validation
+  // Validation de nombre
   static String? validateNumber(String? value, {String? fieldName}) {
     if (value == null || value.isEmpty) {
       return null; // Optional
@@ -214,7 +214,7 @@ class Validators {
     return null;
   }
 
-  // Positive Number Validation
+  // Validation de nombre positif
   static String? validatePositiveNumber(String? value, {String? fieldName}) {
     final error = validateNumber(value, fieldName: fieldName);
     if (error != null) return error;

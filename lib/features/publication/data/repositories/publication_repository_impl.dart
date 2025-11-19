@@ -18,7 +18,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
   @override
   Future<Either<Failure, List<Publication>>> getPublications() async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -36,7 +36,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
   @override
   Future<Either<Failure, List<Publication>>> getMyPublications() async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -52,7 +52,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
   @override
   Future<Either<Failure, Publication>> getPublicationById(int id) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -75,7 +75,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
     String? tags,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -104,7 +104,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
     String? imagePath,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -138,7 +138,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
     String? imagePath,
   }) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -166,7 +166,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
   @override
   Future<Either<Failure, void>> deletePublication(int id) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -184,7 +184,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
   @override
   Future<Either<Failure, Publication>> publishPublication(int id) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
@@ -202,7 +202,7 @@ class PublicationRepositoryImpl implements PublicationRepository {
   @override
   Future<Either<Failure, Publication>> archivePublication(int id) async {
     if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
+      return const Left(NetworkFailure('Pas de connexion internet'));
     }
 
     try {
